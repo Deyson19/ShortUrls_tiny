@@ -13,7 +13,7 @@ namespace ShortUrls
         public TinyUrl(IConfiguration configuration)
         {
             _configuration = configuration;
-            accessToken = _configuration.GetValue<string>("AccessToken");
+            accessToken = _configuration.GetValue<string>("AccessToken") ?? "QKxV3DK3tunKTSbXc5xJa5VfpkypfA752nBLWQiINZsAyYXtcR9Y53jfvYW3";
             _httpClient = new HttpClient();
             _httpClient.BaseAddress = new Uri("https://api.tinyurl.com");
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
@@ -57,7 +57,7 @@ namespace ShortUrls
                 }
                 else
                 {
-                    var longUrlToJson = JsonSerializer.Serialize(longUrl);
+                    var longUrlToJson = new { url = longUrl };
                     var response = _httpClient.PostAsJsonAsync("create", longUrlToJson).Result;
                     var result = response.Content.ReadFromJsonAsync<TinyResponseOnCreate>();
                     return result.Result.Data.TinyUrl.ToString();
