@@ -1,0 +1,6 @@
+@ShortUrls_HostAddress = http://localhost:5128
+
+GET {{ShortUrls_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
